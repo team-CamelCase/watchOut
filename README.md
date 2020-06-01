@@ -4,7 +4,7 @@ This is a electronic device donation matching project for supporting students ha
 # Contributors
 [Kim Yaechan](https://github.com/LukeKim32)
 
-[Bak seojun](https://github.com/bakseo3060)
+[Bak Seojun](https://github.com/bakseo3060)
 
 [Lee Suyeon](https://github.com/suyeon0506)
 
