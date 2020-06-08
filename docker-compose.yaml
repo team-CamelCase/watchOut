@@ -9,9 +9,9 @@ services:
             mynet:
                 ipv4_address: 172.28.0.2
         expose:
-            - "80"
+            - "3000"
         ports:
-            - "80:80"
+            - "3000:3000"
 
     speech_saver:
         build:
@@ -21,6 +21,48 @@ services:
         networks:
             mynet:
                  ipv4_address: 172.28.0.3
+        volumes:
+            - ./docker/mount/speechSaver/logs:/app/logs
+        env_file:
+            - ./.env
+        expose :
+            - "8080"
+
+    web_app_proxy:
+        build:
+            context: .
+            dockerfile: ./docker/dockerfiles/webApp/proxy/Dockerfile
+        container_name: web_app_proxy
+        networks:
+            mynet:
+                ipv4_address: 172.28.0.4
+        expose:
+            - "80"
+        ports:
+            - "80:80"
+
+    # dynamic scaling을 위해 쿠버네티스로 Migration 필요
+    web_app_backend_one:
+        build:
+            context: .
+            dockerfile: ./docker/dockerfiles/webApp/backend/Dockerfile
+        networks:
+            mynet:
+                ipv4_address: 172.28.0.5
+        volumes:
+            - ./docker/mount/speechSaver/logs:/app/logs
+        env_file:
+            - ./.env
+        expose :
+            - "8080"
+
+    web_app_backend_two:
+        build:
+            context: .
+            dockerfile: ./docker/dockerfiles/webApp/backend/Dockerfile
+        networks:
+            mynet:
+                ipv4_address: 172.28.0.6
         volumes:
             - ./docker/mount/speechSaver/logs:/app/logs
         env_file:

@@ -6,10 +6,10 @@ MAINTAINER yaechanKim <burgund32@gmail.com>
 # Erase Default config
 RUN rm -rf /etc/nginx/conf.d
 
-COPY ./speechProxy/conf /etc/nginx
+COPY ./webApp/proxy/conf /etc/nginx
 
 WORKDIR /usr/share/nginx/html
 
-EXPOSE 3000
+EXPOSE 80
 
 CMD ["/usr/sbin/nginx"]

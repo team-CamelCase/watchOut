@@ -1,7 +1,8 @@
 {
-  "name": "ibm_fight_covid_local_speech_saver",
+  "name": "ibm_fight_covid_local_web_app",
   "version": "1.0.0",
-  "description": "This is a server to manage text data and speech files",
+  "description": "This is a system supporting RESTful API for covid data with simple web pages",
+  "main": "index.js",
   "scripts": {
     "start" : "node ./bin/www"
   },
