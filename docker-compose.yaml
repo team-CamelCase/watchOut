@@ -1,0 +1,36 @@
+version: '3'
+services:
+    speech_proxy:
+        build:
+            context: .
+            dockerfile: ./docker/dockerfiles/speechProxy/Dockerfile
+        container_name: speech_proxy
+        networks:
+            mynet:
+                ipv4_address: 172.28.0.2
+        expose:
+            - "80"
+        ports:
+            - "80:80"
+
+    speech_saver:
+        build:
+            context: .
+            dockerfile: ./docker/dockerfiles/speechSaver/Dockerfile
+        container_name: speech_saver
+        networks:
+            mynet:
+                 ipv4_address: 172.28.0.3
+        volumes:
+            - ./docker/mount/speechSaver/logs:/app/logs
+        env_file:
+            - ./.env
+        expose :
+            - "8080"
+
+networks:
+  mynet:
+    ipam:
+      driver: default
+      config:
+        - subnet: 172.28.0.0/16

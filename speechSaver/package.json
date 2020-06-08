@@ -1,0 +1,32 @@
+{
+  "name": "ibm_fight_covid_local",
+  "version": "1.0.0",
+  "description": "This is a project to fight agains COVID-19, supported by IBM, managed by TEAM CamelCASE",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start" : "node ./bin/www"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/LukeKim32/ibm_fight_covid_local.git"
+  },
+  "keywords": [
+    "covid",
+    "ibm",
+    "local"
+  ],
+  "author": "Yaechan Kim",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/LukeKim32/ibm_fight_covid_local/issues"
+  },
+  "homepage": "https://github.com/LukeKim32/ibm_fight_covid_local#readme",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "debug": "^4.1.1",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "morgan": "^1.10.0"
+  }
+}
