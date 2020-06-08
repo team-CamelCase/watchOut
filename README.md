@@ -1,4 +1,4 @@
-# ibm fight covid local
+# watchOut
 This is a project supporting infra and features to local districts world wide, to fight against spread of COVID-19 supported by *2020 IBM hackathon*
 
 # Usage
