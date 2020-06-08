@@ -9,6 +9,8 @@ const port = process.env.SPEECH_SAVER_PORT
 
 app.set('port', port);
 
+console.log("server running on ", port)
+
 server.listen(port);
 server.on('error', onError);
 server.on('listening', onListening);
