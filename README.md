@@ -1,5 +1,5 @@
-# ibm_device_donation
-This is a electronic device donation matching project for supporting students having difficulties obtaining devices for remote/online classes, supported by *2020 IBM hackathon*
+# ibm fight covid local
+This is a project supporting infra and features to local districts world wide, to fight against spread of COVID-19 supported by *2020 IBM hackathon*
 
 # Contributors
 [Kim Yaechan](https://github.com/LukeKim32)
