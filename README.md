@@ -1,5 +1,17 @@
-# ibm fight covid local
+# watchOut
 This is a project supporting infra and features to local districts world wide, to fight against spread of COVID-19 supported by *2020 IBM hackathon*
+
+# Usage
+
+```
+make run
+```
+
+1. Must have ```.env``` file in repository root level
+
+> baseURL : http://localhost
+1. Voice File Management Server : port 3000
+2. watchOut web page : port 80
 
 # Contributors
 [Kim Yaechan](https://github.com/LukeKim32)
