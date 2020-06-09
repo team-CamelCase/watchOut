@@ -5,7 +5,7 @@ const server = http.createServer(app);
 
 require('dotenv').config();
 
-const port = process.env.SPEECH_SAVER_PORT
+const port = process.env.WEB_APP_PORT
 
 app.set('port', port);
 
