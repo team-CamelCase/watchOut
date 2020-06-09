@@ -1,33 +1,46 @@
 var app = require('../app');
 var debug = require('debug')('camelCase:speechServer');
 const http = require('http')
-const server = http.createServer(app);
+const dbClient = require('../models/client')
+const constants = require('../tools/constants')
 
 require('dotenv').config();
 
-const port = process.env.SPEECH_SAVER_PORT
+async function start(server, port) {
+  try {
 
-app.set('port', port);
+    // Cloud Network Access Check!
+    await dbClient.init()
 
-console.log("server running on ", port)
+    app.set('port', port);
 
-server.listen(port);
-server.on('error', onError);
-server.on('listening', onListening);
+    server.listen(port);
+    server.on('error', onError);
+    server.on('listening', onListening);
 
+  } catch (err) {
+    console.log(err)
+    process.exit(1)
+    return
+  }
+}
+
+const server = http.createServer(app);
+
+start(server, constants.port)
 
 /**
  * Event listener for HTTP server "error" event.
  */
 
-function onError(error) {
+const onError = (error) => {
   if (error.syscall !== 'listen') {
     throw error;
   }
 
-  var bind = typeof port === 'string'
-    ? 'Pipe ' + port
-    : 'Port ' + port;
+  var bind = typeof constants.port === 'string'
+    ? 'Pipe ' + constants.port
+    : 'Port ' + constants.port;
 
   // handle specific listen errors with friendly messages
   switch (error.code) {
@@ -48,10 +61,11 @@ function onError(error) {
  * Event listener for HTTP server "listening" event.
  */
 
-function onListening() {
+const onListening = () => {
   var addr = server.address();
   var bind = typeof addr === 'string'
     ? 'pipe ' + addr
     : 'port ' + addr.port;
   debug('Listening on ' + bind);
+  console.log("Server Listenening on ", constants.port)
 }
