@@ -53,7 +53,7 @@ function IndexHeader() {
               ></img>
             Team CamelCase. Supported by{" "}
             <a
-              href="https://www.creative-tim.com?ref=nukr-index-header"
+              href="https://cloud.ibm.com/"
               target="_blank"
             >
               <img

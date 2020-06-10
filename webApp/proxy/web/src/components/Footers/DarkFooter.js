@@ -12,28 +12,13 @@ function DarkFooter() {
           <ul>
             <li>
               <a
-                href="https://www.creative-tim.com?ref=nukr-dark-footer"
+                href="https://github.com/team-CamelCase"
                 target="_blank"
               >
-                Creative Tim
+                Team CamelCase
               </a>
             </li>
-            <li>
-              <a
-                href="http://presentation.creative-tim.com?ref=nukr-dark-footer"
-                target="_blank"
-              >
-                About Us
-              </a>
-            </li>
-            <li>
-              <a
-                href="http://blog.creative-tim.com?ref=nukr-dark-footer"
-                target="_blank"
-              >
-                Blog
-              </a>
-            </li>
+            
           </ul>
         </nav>
         <div className="copyright" id="copyright">
@@ -44,7 +29,7 @@ function DarkFooter() {
           >
             Invision
           </a>
-          . Coded by{" "}
+          . Template supported by{" "}
           <a
             href="https://www.creative-tim.com?ref=nukr-dark-footer"
             target="_blank"
