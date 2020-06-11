@@ -1,22 +1,22 @@
 var express = require('express');
 var app = express();
 var logger = require('morgan');
-var bodyparser = require('body-parser');
+var bodyParser = require('body-parser');
 const speechRouter = require('./routes/speech');
+const constants = require('./tools/constants')
 
 app.use(logger('dev'));
-app.use(express.json());
+app.use(bodyParser.json());
 app.use(
-  bodyparser.urlencoded({
+  bodyParser.urlencoded({
     extended:false
   })
 );
 
 // Set Routers
-const basePath = "/api/v1"
 
 app.use(
-  basePath + '/speech', 
+  constants.basePath + '/speech', 
   speechRouter
 );
 

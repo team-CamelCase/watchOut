@@ -2,9 +2,9 @@ const express = require('express');
 var speechRouter = express.Router();
 const speechHandler = require('../handlers/speech');
 
-speechRouter.post(
+speechRouter.get(
     '/', 
-    speechHandler.saveSpeechFile
+    speechHandler.getSpeechFile
 );
 
 module.exports = speechRouter;
