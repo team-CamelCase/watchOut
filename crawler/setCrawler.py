@@ -16,15 +16,10 @@ soup = BeautifulSoup(html, 'html.parser')
 # sampleContents = soup.select('#DataTables_Table_0 > tbody > tr:nth-child(4) > td')
 
 #확진자 이동 경로 및 시간이 있는 html 항목 tr:nth-child(2n) (n>=1)
-for i in range(1,10):
-    sampleContents = soup.select('#DataTables_Table_0 > tbody > tr:nth-child({})'.format(i))
+for i in range(2,100,2):
+    sampleContents = soup.select('#DataTables_Table_0 > tbody > tr:nth-child({})'.format(2*i))
     print(sampleContents)
 
-
-##필요 기능##
-# 1. Raw data to cleaned Data Function
-# 2. Automatic detection of new posts Function
-# 3. Create news scripts
 
 
 
