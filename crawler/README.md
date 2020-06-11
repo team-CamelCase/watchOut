@@ -1,4 +1,4 @@
-#Purpose
+# Purpose
 Data crawling and crate raido news script
 
 ### 필수 사항
@@ -8,7 +8,7 @@ Data crawling and crate raido news script
 2. 사전에 virtualenv crawlerCovid를 실행하여 crawlerCovid 가상환경이 생성되어 있습니다.
 3. source crawlerCovid/bin/activate를 실행 후 crawlerCovid 가상환경이 실행되어 있는지 확인하세요.
 
-#Download and Setting
+# Download and Setting
 docker 에는 필요한 패키지랑 라이브러리들 환경 세팅 해놨습니다.
 해당 crawler를 로컬 환경에서 실행시 필요한 요소들은 아래 항목을 통해 다운로드 가능합니다.
 
