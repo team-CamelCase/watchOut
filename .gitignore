@@ -1,2 +1,15 @@
 *.env
 node_modules
+
+## Crawler's ignore inforation
+# Default ignored files
+./crawler/.idea/shelf/
+./crawler/.idea/workspace.xml
+# Datasource local storage ignored files
+./crawler/.idea/dataSources/
+./crawler/.idea/dataSources.local.xml
+# Editor-based HTTP Client requests
+./crawler/.idea/httpRequests/
+
+./crawler/GoogleCloudNLP
+./crawler/accessKeyGoogleCloudNLP.json
