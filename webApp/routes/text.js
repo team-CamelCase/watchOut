@@ -3,8 +3,13 @@ var textRouter = express.Router();
 const textHandler = require('../handlers/text');
 
 textRouter.get(
-    '/', 
-    textHandler.getTextFile
+    '/',
+    textHandler.getALLTextFile
+);
+
+textRouter.get(
+    '/latest/:number',
+    textHandler.getLatestTextFile
 );
 
 module.exports = textRouter;

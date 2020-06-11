@@ -2,6 +2,7 @@ require('dotenv').config()
 
 exports.port = process.env.WEB_APP_PORT
 exports.basePath = "/api/v1"
+exports.currentRegion = "korea"
 
 // DB connection
 exports.dbId = process.env.DB_ID
