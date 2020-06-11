@@ -5,10 +5,9 @@ exports.getALLTextFile = async (req, res) => {
 
   try {
     const region = constants.currentRegion
-
     var news = dbClient.getCollection(region + '-news')
 
-    // 전체 목록
+    // 전체 텍스트 목록
     await news.find().toArray(function (err, docs) {
       console.log(docs);
       res.statusCode = 200;
@@ -30,7 +29,7 @@ exports.getLatestTextFile = async (req, res) => {
 
     var news = dbClient.getCollection(region + '-news')
 
-    // 전체 목록
+    // 최신 뉴스 텍스트 목록
     await news.find().sort({createdTime: -1}).limit(textNum).toArray(function (err, docs){
       console.log(docs);
       res.statusCode = 200;
