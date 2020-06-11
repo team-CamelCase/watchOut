@@ -1,11 +1,11 @@
 const dbClient = require('../models/client')
 
-exports.getSpeechFile = async (req, res) => {
+exports.getTextFile = async (req, res) => {
 
   try {
     const region = "korea"
 
-    var news = dbClient.getCollection(region + '-voice')
+    var news = dbClient.getCollection(region + '-news')
 
     // 전체 목록
     await news.find().toArray(function (err, docs) {
