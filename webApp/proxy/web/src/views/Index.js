@@ -13,7 +13,7 @@ import { observer, inject } from "mobx-react";
 import Images from "./index-sections/Images.js";
 import BasicElements from "./index-sections/BasicElements.js";
 import Navbars from "./index-sections/Navbars.js";
-import Tabs from "./index-sections/Tabs.js";
+import NewsSection from "./index-sections/NewsSection";
 import Pagination from "./index-sections/Pagination.js";
 import Notifications from "./index-sections/Notifications.js";
 import Typography from "./index-sections/Typography.js";
@@ -70,7 +70,7 @@ const Index = inject("store")(
             {isLoading ? 
               "Loading..."
               :
-              <Tabs />
+              <NewsSection />
             }
           </div>
           <DarkFooter />

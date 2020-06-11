@@ -1,10 +1,13 @@
 import { decorate, observable, action, entries } from "mobx";
 
-
 class Store {
     constructor() {
         this.userCity = null
         this.userCountry = null
+        this.newsTablePageNumber = 0
+        this.newsTableRowsPerPage = 5
+        this.cityNewsData = []
+        this.countryNewsData = []
     }
 
     set(field, value) {
@@ -36,14 +39,70 @@ class Store {
             throw err
         }
     }
+
+    async getNewsData(regionType) {
+        try {
+            // const response = await fetch(
+            //     "http://우리백엔드서버2",
+            //     {
+            //         headers: {
+            //             Accept: "application/json"
+            //         },
+            //         method: "GET"
+            //     }
+            // )
+
+            // const responseJson = await response.json()
+
+            // return responseJson.data
+
+            // this.set(
+            //     "cityNewsData",
+            //     responseJson.data.city
+            // )
+
+            // this.set(
+            //     "countryNewsData",
+            //     responseJson.data.country
+            // )
+
+            this.set(
+                regionType,
+                rows
+            )
+
+            return 
+
+        } catch (err) {
+            console.log("getNesData error", err)
+            throw err
+        }
+    }
 }
 
 
+function createData(type, text, createdTime) {
+    return { type, text, createdTime };
+}
+
+const rows = [
+    createData('정보', '연남동 거주자 확진 동선 : 다모토리 -> ', Date.now()),
+    createData('정보', '51번째 확진자 동선 : 부탄츄 -> ', Date.now() + 10),
+    createData('안내', '코로나 예방 수칙 안내 : 마스크를 꼭..', Date.now() + 100),
+    createData('정보', '52번째 거주자 확진 동선 : 다모토리 -> ', Date.now() + 200),
+    createData('정보', '53번째 거주자 확진 동선 : 다모토리 -> ', Date.now() + 300),
+    createData('정보', '54번째 거주자 확진 동선 : 다모토리 -> ', Date.now() + 400),
+    createData('정보', '55번째 거주자 확진 동선 : 다모토리 -> ', Date.now() + 500),
+    createData('정보', '56번째 거주자 확진 동선 : 다모토리 -> ', Date.now() + 600),
+].sort((a, b) => (a.createdTime < b.createdTime ? -1 : 1));
+
 decorate(Store, {
-    userCity : observable,
-    userCountry : observable,
-    set : action,
-    getLocalInfo : action,
+    userCity: observable,
+    userCountry: observable,
+    newsTablePageNumber: observable,
+    newsTableRowsPerPage: observable,
+    set: action,
+    getLocalInfo: action,
 });
 
 export default Store;
