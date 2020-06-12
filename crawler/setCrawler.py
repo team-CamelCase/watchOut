@@ -41,10 +41,12 @@ class SeoulCrawler:
             # print("length : ", len(self.rawContents))
     def crawlRawData(self, newPostNumber):
         result = {}
+        num = 0
         for i in range(1,newPostNumber+3):
             if i % 2 != 0:
                 component = {} 
-                component['환자번호'] = self.soup.select('#patient:nth-child({}) > td.sorting_1 > p'.format(i))[0].get_text()
+                num = self.soup.select('#patient:nth-child({}) > td.sorting_1 > p'.format(i))[0].get_text()
+                component['환자번호'] = num
                 component['감염경로'] = self.soup.select('#patient:nth-child({}) > td:nth-child(3)'.format(i))[0].get_text()
                 component['확진일'] = self.soup.select('#patient:nth-child({}) > td:nth-child(4)'.format(i))[0].get_text()
                 component['거주지'] = self.soup.select('#patient:nth-child({}) > td:nth-child(5)'.format(i))[0].get_text()
@@ -59,13 +61,14 @@ class SeoulCrawler:
                             contentInfo["날짜"] = content.b.text
                         if content.span != None : 
                             self.parseInfo(content.span.text,contentInfo)
-                            way['세부'] =contentInfo
+                            way['세부'] = contentInfo
                         else : 
                             way['세부'] = "확인중"
                     component['경로'] = way
-                    result[i] = component
-            
-        print(result)
+                    result[num]=component
+                else : 
+                    result[num]=component
+            print(result)
 
 
 
