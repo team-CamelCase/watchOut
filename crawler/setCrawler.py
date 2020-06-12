@@ -1,9 +1,13 @@
 from selenium import webdriver
 from bs4 import BeautifulSoup
+options = webdriver.ChromeOptions()
+options.add_argument('headless')
+options.add_argument('window-size=1920x1080')
+options.add_argument("disable-gpu")
 
 class SeoulCrawler:
     ## Set Webdriver(Used Chrome Driver)
-    driver = webdriver.Chrome('./chromedriver')
+    driver = webdriver.Chrome('./chromedriver', chrome_options=options)
     ## Create webdriver object from corona tab of Seoul City Hall's hompage
     driver.get('https://www.seoul.go.kr/coronaV/coronaStatus.do')
     ## Click confirmation path tab
@@ -15,8 +19,8 @@ class SeoulCrawler:
     topPatientNumber = False
     def __init__(self):
         #클래스 초기화시 최상단 patientNumber를 가져온다.
-        patientNumber = self.soup.select('#patient:nth-child(1) > td.sorting_1 > p')
-        self.topPatientNumber = patientNumber
+        patientNumber = self.soup.select('#patient:nth-child(1) > td.sorting_1 > p')[0].get_text()
+        self.topPatientNumber = int(patientNumber)
     def countNewPost(self, prevPatientNumber):
         ## 10분마다 새로운 게시글이 있는 확인
         ## prevPatientNumber와 비교하여 새로운 정보 확인
@@ -30,8 +34,9 @@ class SeoulCrawler:
 
         return rawContents
 crawler = SeoulCrawler()
-topPatientNumber = crawler.topPatientNumber
-
+topPatientNumber = str(crawler.topPatientNumber)
+print(type(topPatientNumber))
+print(topPatientNumber)
 print(crawler.crawlRawData())
 
 
