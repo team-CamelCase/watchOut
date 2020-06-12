@@ -2,8 +2,7 @@ var express = require('express');
 var logger = require('morgan');
 var app = express();
 var bodyParser = require('body-parser');
-const speechRouter = require('./routes/speech');
-const textRouter = require('./routes/text');
+const newsRouter = require('./routes/news');
 const constants = require('./tools/constants')
 
 app.use(logger('dev'));
@@ -16,13 +15,8 @@ app.use(
 
 // Set Routers
 app.use(
-  constants.basePath + '/speech', 
-  speechRouter
-);
-
-app.use(
-    constants.basePath + '/text',
-    textRouter
+  constants.basePath + '/news',
+  newsRouter
 );
 
 module.exports = app;
