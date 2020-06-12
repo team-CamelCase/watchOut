@@ -12,5 +12,8 @@ exports.dbDefaultName = process.env.DB_DEFAULT_NAME
 
 exports.splitSizeUnit = 1024 * 1024 * 5
 
+// IBM cloud
+exports.watsonApiKey = process.env.API_KEY
+
 // react
 exports.REACT_APP_IPINFO_TOKEN = "3862e907bd7876"
