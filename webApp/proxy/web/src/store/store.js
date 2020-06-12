@@ -1,5 +1,7 @@
 import { decorate, observable, action, entries } from "mobx";
 
+const MINUTE = 60000
+
 class Store {
     constructor() {
         this.userCity = null
@@ -17,11 +19,19 @@ class Store {
         this.curDialogNewsId = null
         this.curDialogNewsDataType = null
 
+        this.snackbarOpen = false
+        this.snackbarMsg = ""
+
         /* Constants */
 
         // Region Types
         this.CITY = "city"
         this.COUNTRY = "country"
+
+        setInterval(() => {
+            this.fetchNewsData(this.CITY)
+            this.fetchNewsData(this.COUNTRY)
+        }, 5000)//MINUTE)
     }
 
     set = (field, value) => {
@@ -137,20 +147,47 @@ class Store {
 
             // return responseJson.data
 
+            let newsDataField = ""
 
             switch (regionType) {
+
                 case this.CITY:
-                    this.set(
-                        "cityNewsData",
-                        rows
-                    )
+                    newsDataField = "cityNewsData"
                     break;
 
                 case this.COUNTRY:
+                    newsDataField = "countryNewsData"
+            }
+
+            if (this[newsDataField].length) {
+
+                const isDataNew = isNewDataAppeared(
+                    this[newsDataField],
+                    rows
+                )
+
+                if (isDataNew) {
                     this.set(
-                        "countryNewsData",
+                        "snackbarMsg",
+                        "새로운 뉴스가 생성되었습니다"
+                    )
+
+                    this.set(
+                        "snackbarOpen",
+                        true
+                    )
+
+                    this.set(
+                        newsDataField,
                         rows
                     )
+                }
+
+            } else {
+                this.set(
+                    newsDataField,
+                    rows
+                )
             }
 
             return
@@ -184,8 +221,9 @@ decorate(Store, {
     cityNewsPageNum: observable,
     cityNewsRowsPerPage: observable,
     isNewsDialogOpen: observable,
-    countryNewsPageNum : observable,
-    countryNewsRowsPerPage : observable,
+    countryNewsPageNum: observable,
+    countryNewsRowsPerPage: observable,
+    snackbarOpen: observable,
     set: action,
     getLocalInfo: action,
     openNewsDialog: action,
@@ -193,3 +231,21 @@ decorate(Store, {
 });
 
 export default Store;
+
+const isNewDataAppeared = (prevList, newList) => {
+    return newList.reduce((isDataNew, newEl) => {
+        if (isDataNew) {
+            return true
+        }
+
+        const isAlreadyExist = prevList.find(prevEl => {
+            return prevEl.id == newEl.id
+        })
+
+        if (!isAlreadyExist) {
+            return true
+        }
+
+        return false
+    }, false)
+}
