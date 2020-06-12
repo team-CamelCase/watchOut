@@ -41,7 +41,7 @@ class SeoulCrawler:
             # print("length : ", len(self.rawContents))
     def crawlRawData(self, newPostNumber):
         num = 0
-        for i in range(1,newPostNumber+3):
+        for i in range(1,(newPostNumber+1)*2):
             if i % 2 != 0:
                 component = {} 
                 num = self.soup.select('#patient:nth-child({}) > td.sorting_1 > p'.format(i))[0].get_text()
@@ -67,8 +67,6 @@ class SeoulCrawler:
                             way=["확인중"]
                     component["경로"] = way 
                     self.rawContents.append(component)
-        print(self.rawContents)
-
 
     def parseInfo(self, string,contentInfo) :
         strs = string.split('→')
