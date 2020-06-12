@@ -89,9 +89,7 @@ const NewsTable = inject("store")(
 						"countryNewsPageNum",
 						0
 					);
-
 			}
-
 		};
 
 		return (
@@ -116,7 +114,7 @@ const NewsTable = inject("store")(
 							)
 							: props.store.getNewsData(props.regionType)
 						).map((row) =>
-							<TableRow key={row.name}>
+							<TableRow key={row._id}>
 								<TableCell
 									component="th"
 									scope="row"
@@ -127,9 +125,9 @@ const NewsTable = inject("store")(
 									<Button
 										onClick={() => props.store.openNewsDialog(
 											props.regionType,
-											row.id
+											row._id
 										)}>
-										{row.text}
+										{row.title}
 									</Button>
 								</TableCell>
 								<TableCell

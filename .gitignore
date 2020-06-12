@@ -13,3 +13,6 @@ node_modules
 
 ./crawler/GoogleCloudNLP
 ./crawler/accessKeyGoogleCloudNLP.json
+
+.idea
+.idea/*

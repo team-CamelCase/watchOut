@@ -42,27 +42,13 @@ services:
             - "80:80"
 
     # dynamic scaling을 위해 쿠버네티스로 Migration 필요
-    web_app_backend_one:
+    web_app_backend:
         build:
             context: .
             dockerfile: ./docker/dockerfiles/webApp/backend/Dockerfile
         networks:
             mynet:
                 ipv4_address: 172.28.0.5
-        volumes:
-            - ./docker/mount/speechSaver/logs:/app/logs
-        env_file:
-            - ./.env
-        expose :
-            - "8000"
-
-    web_app_backend_two:
-        build:
-            context: .
-            dockerfile: ./docker/dockerfiles/webApp/backend/Dockerfile
-        networks:
-            mynet:
-                ipv4_address: 172.28.0.6
         volumes:
             - ./docker/mount/speechSaver/logs:/app/logs
         env_file:

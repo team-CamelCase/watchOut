@@ -15,7 +15,7 @@ const NewsDialog = inject("store")(
 		const regionNewsList = props.store[props.store.curDialogNewsDataType]
 
 		const data = regionNewsList.find(eachNews => {
-				return eachNews.id == props.store.curDialogNewsId
+				return eachNews._id == props.store.curDialogNewsId
 			})
 
 		return (
@@ -30,7 +30,7 @@ const NewsDialog = inject("store")(
 				<div
 					className={classes.dialogTitle}>
 					<div className={classes.newsTitle}>
-					{`COVID-19 ${data.type}`}
+					{`COVID-19 ${data.type} : ${data.title}`}
 					</div>
 					<div className={classes.newsTime}>
 						{showCreatedTime(new Date(data.createdTime))}
@@ -40,7 +40,7 @@ const NewsDialog = inject("store")(
 				<DialogContent
 					className={classes.dialogContent}
 					dividers>
-					{data.text}
+					{data.content}
 				</DialogContent>
 
 				<DialogActions className={classes.dialogActions}>
