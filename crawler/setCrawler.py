@@ -40,7 +40,13 @@ class SeoulCrawler:
             #새로운 Post 전송 후 rawContents를 비워둬야함.
             # print("length : ", len(self.rawContents))
     def crawlRawData(self, newPostNumber):
-        for i in range(1,newPostNumber):
-            self.rawContents.append(self.soup.select('#DataTables_Table_0 > tbody > tr:nth-child({})'.format(i)))
+        print(newPostNumber)
+        for i in range(1,newPostNumber+3):
+            if i % 2 != 0:
+                print("#########")
+                print("환 자 번 호 : ",self.soup.select('#patient:nth-child({}) > td.sorting_1 > p'.format(i))[0].get_text())
+                print("#########")
+            else:
+                self.rawContents.append(self.soup.select('#DataTables_Table_0 > tbody > tr:nth-child({})'.format(i)))
 
 crawler = SeoulCrawler()

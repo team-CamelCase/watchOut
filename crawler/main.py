@@ -14,4 +14,5 @@ while True:
     schedule.run_pending()
     time.sleep(5)
     rawContents = setCrawler.crawler.rawContents
+    print(rawContents)
     setCrawler.crawler.rawContents.clear()
