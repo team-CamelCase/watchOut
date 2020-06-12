@@ -25,8 +25,8 @@ exports.init = async () => {
 
         console.log("DB connection success")
 
-    }catch(err){
-        console.log("DB connection failed")
+    } catch (err) {
+        console.log("DB connection failed", err)
         throw err
     }
 }

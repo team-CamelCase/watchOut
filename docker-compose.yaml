@@ -54,7 +54,7 @@ services:
         env_file:
             - ./.env
         expose :
-            - "8080"
+            - "8000"
 
     web_app_backend_two:
         build:
@@ -68,7 +68,7 @@ services:
         env_file:
             - ./.env
         expose :
-            - "8080"
+            - "8000"
 
 networks:
   mynet:
