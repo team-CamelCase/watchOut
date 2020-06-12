@@ -37,7 +37,10 @@ function IndexHeader() {
             <img
               alt="..."
               className="n-logo"
-              src={require("assets/img/watchout_logo_3.png")}
+              src={require("assets/img/watchOut.png")}
+              style={{
+                  maxWidth: 200
+              }}
             ></img>
             <h4>Protecting Yourself is THE BEST vaccine for COVID-19</h4>
           </div>
