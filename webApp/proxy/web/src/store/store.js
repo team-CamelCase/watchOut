@@ -3,15 +3,25 @@ import { decorate, observable, action, entries } from "mobx";
 class Store {
     constructor() {
         this.userCity = null
-        this.userCountry = null
-        this.newsTablePageNumber = 0
-        this.newsTableRowsPerPage = 5
+        this.cityNewsPageNum = 0
+        this.cityNewsRowsPerPage = 5
         this.cityNewsData = []
+
+
+        this.userCountry = null
+        this.countryNewsPageNum = 0
+        this.countryNewsRowsPerPage = 5
         this.countryNewsData = []
 
         this.isNewsDialogOpen = false
         this.curDialogNewsId = null
         this.curDialogNewsDataType = null
+
+        /* Constants */
+
+        // Region Types
+        this.CITY = "city"
+        this.COUNTRY = "country"
     }
 
     set = (field, value) => {
@@ -21,11 +31,54 @@ class Store {
     openNewsDialog = (regionType, id) => {
         this.isNewsDialogOpen = true
         this.curDialogNewsId = id
-        this.curDialogNewsDataType = regionType
+
+        switch (regionType) {
+            case this.CITY:
+                this.curDialogNewsDataType = "cityNewsData"
+            case this.COUNTRY:
+                this.curDialogNewsDataType = "countryNewsData"
+        }
     }
 
     closeNewsDialog = () => {
         this.isNewsDialogOpen = false
+    }
+
+    getRegionName = (type) => {
+        switch (type) {
+            case this.CITY:
+                return this.userCity
+            case this.COUNTRY:
+                return this.userCountry
+        }
+    }
+
+    getNewsData = (type) => {
+        switch (type) {
+            case this.CITY:
+                return this.cityNewsData
+            case this.COUNTRY:
+                return this.countryNewsData
+        }
+
+    }
+
+    getNewsPageNum = (type) => {
+        switch (type) {
+            case this.CITY:
+                return this.cityNewsPageNum
+            case this.COUNTRY:
+                return this.countryNewsPageNum
+        }
+    }
+
+    getRowsPerPage = (type) => {
+        switch (type) {
+            case this.CITY:
+                return this.cityNewsRowsPerPage
+            case this.COUNTRY:
+                return this.countryNewsRowsPerPage
+        }
     }
 
 
@@ -33,11 +86,13 @@ class Store {
 
         try {
 
+            const API_TOKEN = process.env.REACT_APP_IPINFO_TOKEN
+
             const response = await fetch(
                 "http://ipinfo.io/json",
                 {
                     headers: {
-                        Authorization: `Bearer ${process.env.REACT_APP_IPINFO_TOKEN}`,
+                        Authorization: `Bearer ${API_TOKEN}`,
                         Accept: "application/json"
                     },
                     method: "GET"
@@ -56,7 +111,17 @@ class Store {
         }
     }
 
-    getNewsData = async (regionType) => {
+    isNewsDataReady = (type) => {
+
+        switch (type) {
+            case this.CITY:
+                return this.cityNewsData.length == 0
+            case this.COUNTRY:
+                return this.countryNewsData.length == 0
+        }
+    }
+
+    fetchNewsData = async (regionType) => {
         try {
             // const response = await fetch(
             //     "http://우리백엔드서버2",
@@ -72,22 +137,23 @@ class Store {
 
             // return responseJson.data
 
-            // this.set(
-            //     "cityNewsData",
-            //     responseJson.data.city
-            // )
 
-            // this.set(
-            //     "countryNewsData",
-            //     responseJson.data.country
-            // )
+            switch (regionType) {
+                case this.CITY:
+                    this.set(
+                        "cityNewsData",
+                        rows
+                    )
+                    break;
 
-            this.set(
-                regionType,
-                rows
-            )
+                case this.COUNTRY:
+                    this.set(
+                        "countryNewsData",
+                        rows
+                    )
+            }
 
-            return 
+            return
 
         } catch (err) {
             console.log("getNesData error", err)
@@ -115,13 +181,15 @@ const rows = [
 decorate(Store, {
     userCity: observable,
     userCountry: observable,
-    newsTablePageNumber: observable,
-		newsTableRowsPerPage: observable,
-		isNewsDialogOpen : observable,
+    cityNewsPageNum: observable,
+    cityNewsRowsPerPage: observable,
+    isNewsDialogOpen: observable,
+    countryNewsPageNum : observable,
+    countryNewsRowsPerPage : observable,
     set: action,
     getLocalInfo: action,
-    openNewsDialog : action,
-    closeNewsDialog : action
+    openNewsDialog: action,
+    closeNewsDialog: action
 });
 
 export default Store;
