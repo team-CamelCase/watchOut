@@ -47,6 +47,24 @@ class SeoulCrawler:
                 print("환 자 번 호 : ",self.soup.select('#patient:nth-child({}) > td.sorting_1 > p'.format(i))[0].get_text())
                 print("#########")
             else:
-                self.rawContents.append(self.soup.select('#DataTables_Table_0 > tbody > tr:nth-child({})'.format(i)))
+                contents = self.soup.select('#DataTables_Table_0 > tbody > tr:nth-child({}) > td.tdl > p'.format(i))
+                if contents != None :
+                    for content in contents : 
+                        if content.b != None : 
+                            print("---- Date ----")
+                            print(content.b.text)
+                        if content.span != None : 
+                            print("---- Info ---")
+                            self.parseInfo(content.span.text)
+
+    def parseInfo(self, string) :
+        strs = string.split('→')
+        if len(strs) == 1 : 
+            time = string.split(":")
+            for t in time:
+                print(t)
+        else : ## 여러 개 데이터 
+            for s in strs:
+
 
 crawler = SeoulCrawler()
