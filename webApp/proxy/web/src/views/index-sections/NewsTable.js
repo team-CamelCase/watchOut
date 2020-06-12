@@ -78,7 +78,7 @@ const NewsTable = inject("store")(
 						0
 					);
 					break
-					
+
 				case props.store.COUNTRY:
 					props.store.set(
 						"countryNewsPageNum",

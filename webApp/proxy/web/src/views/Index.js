@@ -24,36 +24,32 @@ import CompleteExamples from "./index-sections/CompleteExamples.js";
 import SignUp from "./index-sections/SignUp.js";
 import Examples from "./index-sections/Examples.js";
 import Download from "./index-sections/Download.js";
+import Snackbar from '@material-ui/core/Snackbar';
+import MuiAlert from "@material-ui/lab/Alert";
+import { makeStyles } from '@material-ui/core/styles';
+
+const Alert = (props) => {
+  return (
+    <MuiAlert
+      elevation={6}
+      variant="filled"
+      {...props} />
+  )
+}
+
 
 const Index = inject("store")(
   observer((props) => {
+    const classes = useStyles()
 
     const [isLoading, setIsLoading] = useState(false)
 
     useEffect(() => {
-
-      async function init() {
-        try {
-
-          const localInfo = await props.store.getLocalInfo()
-
-          props.store.set("userCity", localInfo.city)
-          props.store.set("userCountry", localInfo.country)
-
-          console.log("check", localInfo.city, localInfo.country)
-
-
-        } catch (err) {
-          alert(err)
-        }
-      }
-      init()
-
       document.body.classList.add("index-page");
       document.body.classList.add("sidebar-collapse");
       document.documentElement.classList.remove("nav-open");
-      window.scrollTo(0, 0);
-      document.body.scrollTop = 0;
+      // window.scrollTo(0, 0);
+      // document.body.scrollTop = 0;
 
       return function cleanup() {
         document.body.classList.remove("index-page");
@@ -61,13 +57,42 @@ const Index = inject("store")(
       };
 
     });
+
+    useEffect(() => {
+      async function init() {
+        try {
+
+          setIsLoading(true)
+
+          const localInfo = await props.store.getLocalInfo()
+
+          props.store.set("userCity", localInfo.city)
+          props.store.set("userCountry", localInfo.country)
+
+          setIsLoading(false)
+
+        } catch (err) {
+          alert(err)
+        }
+      }
+      init()
+
+    }, [])
+
+    const handleSnackbarClose = () => {
+      props.store.set(
+        "snackbarOpen",
+        false
+      )
+    }
+
     return (
       <React.Fragment>
 
         <div className="wrapper">
           <IndexHeader />
           <div className="main">
-            {isLoading ? 
+            {isLoading ?
               "Loading..."
               :
               <NewsSection />
@@ -75,6 +100,22 @@ const Index = inject("store")(
           </div>
           <DarkFooter />
         </div>
+
+
+        {props.store.snackbarOpen &&
+          <Snackbar
+            className={classes.snackbarStyle}
+            open={props.store.snackbarOpen}
+            onClose={handleSnackbarClose}
+            autoHideDuration={2000}
+          >
+            <Alert
+              onClose={handleSnackbarClose}
+              severity="info">
+              {props.store.snackbarMsg}
+            </Alert>
+          </Snackbar>
+        }
       </React.Fragment>
 
 
@@ -84,16 +125,12 @@ const Index = inject("store")(
 export default Index;
 
 
-          //     {/* <Images /> */}
-          //     {/* <BasicElements />
-          // <Navbars /> */}
-          //     {/* <Pagination />
-          // <Notifications />
-          // <Typography />
-          // <Javascript />
-          // <Carousel />
-          // <NucleoIcons />
-          // <CompleteExamples />
-          // <SignUp />
-          // <Examples />
-          // <Download /> */}
+const useStyles = makeStyles(theme => ({
+
+  snackbarStyle: {
+    position: "fixed",
+    top: 12,
+    zIndex: 10,
+    bottom: 'unset'
+  }
+}));
