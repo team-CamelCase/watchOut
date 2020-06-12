@@ -3,25 +3,96 @@ import { decorate, observable, action, entries } from "mobx";
 class Store {
     constructor() {
         this.userCity = null
-        this.userCountry = null
-        this.newsTablePageNumber = 0
-        this.newsTableRowsPerPage = 5
+        this.cityNewsPageNum = 0
+        this.cityNewsRowsPerPage = 5
         this.cityNewsData = []
+
+
+        this.userCountry = null
+        this.countryNewsPageNum = 0
+        this.countryNewsRowsPerPage = 5
         this.countryNewsData = []
+
+        this.isNewsDialogOpen = false
+        this.curDialogNewsId = null
+        this.curDialogNewsDataType = null
+
+        /* Constants */
+
+        // Region Types
+        this.CITY = "city"
+        this.COUNTRY = "country"
     }
 
-    set(field, value) {
+    set = (field, value) => {
         this[field] = value
     }
 
-    async getLocalInfo() {
+    openNewsDialog = (regionType, id) => {
+        this.isNewsDialogOpen = true
+        this.curDialogNewsId = id
+
+        switch (regionType) {
+            case this.CITY:
+                this.curDialogNewsDataType = "cityNewsData"
+            case this.COUNTRY:
+                this.curDialogNewsDataType = "countryNewsData"
+        }
+    }
+
+    closeNewsDialog = () => {
+        this.isNewsDialogOpen = false
+    }
+
+    getRegionName = (type) => {
+        switch (type) {
+            case this.CITY:
+                return this.userCity
+            case this.COUNTRY:
+                return this.userCountry
+        }
+    }
+
+    getNewsData = (type) => {
+        switch (type) {
+            case this.CITY:
+                return this.cityNewsData
+            case this.COUNTRY:
+                return this.countryNewsData
+        }
+
+    }
+
+    getNewsPageNum = (type) => {
+        switch (type) {
+            case this.CITY:
+                return this.cityNewsPageNum
+            case this.COUNTRY:
+                return this.countryNewsPageNum
+        }
+    }
+
+    getRowsPerPage = (type) => {
+        switch (type) {
+            case this.CITY:
+                return this.cityNewsRowsPerPage
+            case this.COUNTRY:
+                return this.countryNewsRowsPerPage
+        }
+    }
+
+
+    getLocalInfo = async () => {
+
         try {
+
+            const API_TOKEN = process.env.REACT_APP_IPINFO_TOKEN
 
             const response = await fetch(
                 "http://ipinfo.io/json",
                 {
                     headers: {
-                        Authorization: `Bearer ${process.env.REACT_APP_IPINFO_TOKEN}`,
+                        Authorization: `Bearer ${API_TOKEN}`,
                         Accept: "application/json"
                     },
                     method: "GET"
@@ -40,7 +111,17 @@ class Store {
         }
     }
 
-    async getNewsData(regionType) {
+    isNewsDataReady = (type) => {
+
+        switch (type) {
+            case this.CITY:
+                return this.cityNewsData.length == 0
+            case this.COUNTRY:
+                return this.countryNewsData.length == 0
+        }
+    }
+
+    fetchNewsData = async (regionType) => {
         try {
             // const response = await fetch(
             //     "http://우리백엔드서버2",
@@ -56,22 +137,23 @@ class Store {
 
             // return responseJson.data
 
-            // this.set(
-            //     "cityNewsData",
-            //     responseJson.data.city
-            // )
 
-            // this.set(
-            //     "countryNewsData",
-            //     responseJson.data.country
-            // )
+            switch (regionType) {
+                case this.CITY:
+                    this.set(
+                        "cityNewsData",
+                        rows
+                    )
+                    break;
 
-            this.set(
-                regionType,
-                rows
-            )
+                case this.COUNTRY:
+                    this.set(
+                        "countryNewsData",
+                        rows
+                    )
+            }
 
-            return 
+            return
 
         } catch (err) {
             console.log("getNesData error", err)
@@ -81,28 +163,33 @@ class Store {
 }
 
 
-function createData(type, text, createdTime) {
-    return { type, text, createdTime };
+const createData = (id, type, text, createdTime) => {
+    return { id, type, text, createdTime };
 }
 
 const rows = [
-    createData('정보', '연남동 거주자 확진 동선 : 다모토리 -> ', Date.now()),
-    createData('정보', '51번째 확진자 동선 : 부탄츄 -> ', Date.now() + 10),
-    createData('안내', '코로나 예방 수칙 안내 : 마스크를 꼭..', Date.now() + 100),
-    createData('정보', '52번째 거주자 확진 동선 : 다모토리 -> ', Date.now() + 200),
-    createData('정보', '53번째 거주자 확진 동선 : 다모토리 -> ', Date.now() + 300),
-    createData('정보', '54번째 거주자 확진 동선 : 다모토리 -> ', Date.now() + 400),
-    createData('정보', '55번째 거주자 확진 동선 : 다모토리 -> ', Date.now() + 500),
-    createData('정보', '56번째 거주자 확진 동선 : 다모토리 -> ', Date.now() + 600),
+    createData(1, '정보', '연남동 거주자 확진 동선 : 다모토리 -> ', Date.now()),
+    createData(2, '정보', '51번째 확진자 동선 : 부탄츄 -> ', Date.now() + 10),
+    createData(3, '안내', '코로나 예방 수칙 안내 : 마스크를 꼭..', Date.now() + 100),
+    createData(5, '정보', '52번째 거주자 확진 동선 : 다모토리 -> ', Date.now() + 200),
+    createData(6, '정보', '53번째 거주자 확진 동선 : 다모토리 -> ', Date.now() + 300),
+    createData(7, '정보', '54번째 거주자 확진 동선 : 다모토리 -> ', Date.now() + 400),
+    createData(8, '정보', '55번째 거주자 확진 동선 : 다모토리 -> ', Date.now() + 500),
+    createData(9, '정보', '56번째 거주자 확진 동선 : 다모토리 -> ', Date.now() + 600),
 ].sort((a, b) => (a.createdTime < b.createdTime ? -1 : 1));
 
 decorate(Store, {
     userCity: observable,
     userCountry: observable,
-    newsTablePageNumber: observable,
-    newsTableRowsPerPage: observable,
+    cityNewsPageNum: observable,
+    cityNewsRowsPerPage: observable,
+    isNewsDialogOpen: observable,
+    countryNewsPageNum : observable,
+    countryNewsRowsPerPage : observable,
     set: action,
     getLocalInfo: action,
+    openNewsDialog: action,
+    closeNewsDialog: action
 });
 
 export default Store;

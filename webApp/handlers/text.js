@@ -1,13 +1,13 @@
 const dbClient = require('../models/client')
 const constants = require('../tools/constants')
 
-exports.getALLSpeechFile = async (req, res) => {
+exports.getALLTextFile = async (req, res) => {
 
   try {
     const region = constants.currentRegion
-    var news = dbClient.getCollection(region + '-voice')
+    var news = dbClient.getCollection(region + '-news')
 
-    // 전체 음성 파일 메타 데이터
+    // 전체 텍스트 목록
     await news.find().toArray(function (err, docs) {
       console.log(docs);
       res.statusCode = 200;
@@ -15,22 +15,22 @@ exports.getALLSpeechFile = async (req, res) => {
     });
 
   } catch (err) {
-
     res.statusCode = 500;
     console.log(err)
     res.end(err.Message)
   }
 }
 
-exports.getLatestSpeechFile = async (req, res) => {
+exports.getLatestTextFile = async (req, res) => {
 
   try {
     const region = constants.currentRegion
-    const speechNum = req.params.number * 1 || 5
-    var news = dbClient.getCollection(region + '-voice')
+    const textNum = req.params.number * 1 || 5
 
-    // 최신 음성파일 메타 뎅이터
-    await news.find().sort({createdTime: -1}).limit(speechNum).toArray(function (err, docs){
+    var news = dbClient.getCollection(region + '-news')
+
+    // 최신 뉴스 텍스트 목록
+    await news.find().sort({createdTime: -1}).limit(textNum).toArray(function (err, docs){
       console.log(docs);
       res.statusCode = 200;
       res.end(JSON.stringify(docs));

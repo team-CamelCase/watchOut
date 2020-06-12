@@ -16,17 +16,16 @@ import { observer, inject } from "mobx-react";
 const NewsTable = inject("store")(
 	observer((props) => {
 		const classes = useStyles();
-		const data = props.store[props.regionDataType]
-		const [isLoading, setIsLoading] = useState(false)
 
+		const [isLoading, setIsLoading] = useState(false)
 
 		useEffect(() => {
 			async function init() {
 				try {
 					setIsLoading(true)
 
-					await props.store.getNewsData(
-						props.regionDataType
+					await props.store.fetchNewsData(
+						props.regionType
 					)
 
 					setIsLoading(false)
@@ -36,30 +35,63 @@ const NewsTable = inject("store")(
 				}
 			}
 
-			if (data.length == 0){
+			if (props.store.isNewsDataReady(props.regionType)) {
 				init()
 			}
 		}, [])
 
 
 		const handleChangePage = (e, newPageNum) => {
-			props.store.set(
-				"newsTablePageNumber",
-				newPageNum
-			);
+
+			switch (props.regionType) {
+
+				case props.store.CITY:
+					props.store.set(
+						"cityNewsPageNum",
+						newPageNum
+					);
+					break
+
+				case props.store.COUNTRY:
+
+					props.store.set(
+						"countryNewsPageNum",
+						newPageNum
+					);
+			}
 		};
 
 		const handleChangeRowsPerPage = (e) => {
 
-			props.store.set(
-				"newsTableRowsPerPage",
-				parseInt(e.target.value, 10)
-			);
+			const newRowsPerPage = parseInt(e.target.value, 10)
 
-			props.store.set(
-				"newsTablePageNumber",
-				0
-			);
+			switch (props.regionType) {
+
+				case props.store.CITY:
+					props.store.set(
+						"cityNewsRowsPerPage",
+						newRowsPerPage
+					);
+
+					props.store.set(
+						"cityNewsPageNum",
+						0
+					);
+					break
+					
+				case props.store.COUNTRY:
+					props.store.set(
+						"countryNewsPageNum",
+						newRowsPerPage
+					);
+
+					props.store.set(
+						"countryNewsPageNum",
+						0
+					);
+
+			}
+
 		};
 
 		return (
@@ -72,13 +104,17 @@ const NewsTable = inject("store")(
 					{isLoading ?
 						<CircularProgress />
 						:
-						(props.store.newsTableRowsPerPage > 0
+						(props.store.getRowsPerPage(props.regionType) > 0
 							? getSlicedRows(
-								data,
-								props.store.newsTablePageNumber,
-								props.store.newsTableRowsPerPage
+								props.store.getNewsData(props.regionType),
+								props.store.getNewsPageNum(
+									props.regionType
+								),
+								props.store.getRowsPerPage(
+									props.regionType
+								)
 							)
-							: data
+							: props.store.getNewsData(props.regionType)
 						).map((row) =>
 							<TableRow key={row.name}>
 								<TableCell
@@ -88,7 +124,11 @@ const NewsTable = inject("store")(
 									{row.type}
 								</TableCell>
 								<TableCell>
-									<Button>
+									<Button
+										onClick={() => props.store.openNewsDialog(
+											props.regionType,
+											row.id
+										)}>
 										{row.text}
 									</Button>
 								</TableCell>
@@ -108,9 +148,13 @@ const NewsTable = inject("store")(
 						<TablePagination
 							rowsPerPageOptions={rowsPerPageOptions}
 							colSpan={3}
-							count={data.length}
-							rowsPerPage={props.store.newsTableRowsPerPage}
-							page={props.store.newsTablePageNumber}
+							count={props.store.getNewsData(props.regionType).length}
+							rowsPerPage={props.store.getRowsPerPage(
+								props.regionType
+							)}
+							page={props.store.getNewsPageNum(
+								props.regionType
+							)}
 							SelectProps={{
 								inputProps: { 'aria-label': 'wassup' },
 								native: true,

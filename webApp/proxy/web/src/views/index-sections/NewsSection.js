@@ -12,6 +12,7 @@ import NewsTable from './NewsTable'
 
 import { observer, inject } from "mobx-react";
 import { makeStyles } from "@material-ui/styles";
+import NewsDialog from './NewsDialog'
 
 
 const NewsSection = inject("store")(
@@ -21,13 +22,15 @@ const NewsSection = inject("store")(
     const sections = [
       {
         title: "현재 지역",
-        regionFieldName: "userCity",
-        regionDataType : "cityNewsData"
+        regionType : "city",
+        // regionFieldName: "userCity",
+        // regionDataType : "cityNewsData"
       },
       {
         title: "현재 국가",
-        regionFieldName: "userCountry",
-        regionDataType : "countryNewsData"
+        regionType : "country",
+        // regionFieldName: "userCountry",
+        // regionDataType : "countryNewsData"
       }
     ]
 
@@ -54,9 +57,9 @@ const NewsSection = inject("store")(
                         title={"눌러서 변경하기"}>
                         <Button
                           className={classes.regionBtnStyle}>
-                          {props.store[
-                            eachSection.regionFieldName
-                          ]}
+                          {props.store.getRegionName(
+                            eachSection.regionType
+                          )}
                         </Button>
                       </Tooltip>
 
@@ -66,7 +69,7 @@ const NewsSection = inject("store")(
                     <Card>
                       <CardBody style={cardBodyStyle}>
                         <NewsTable 
-                          regionDataType={eachSection.regionDataType}/>
+                          regionType={eachSection.regionType}/>
                       </CardBody>
                     </Card>
                   </Col>
@@ -75,6 +78,12 @@ const NewsSection = inject("store")(
 
             </Row>
           </Container>
+
+          <React.Fragment>
+            {props.store.isNewsDialogOpen && 
+              <NewsDialog/>
+            }
+          </React.Fragment>
         </div>
     );
   }))

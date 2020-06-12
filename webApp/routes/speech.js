@@ -3,8 +3,13 @@ var speechRouter = express.Router();
 const speechHandler = require('../handlers/speech');
 
 speechRouter.get(
-    '/', 
-    speechHandler.getSpeechFile
+    '/',
+    speechHandler.getALLSpeechFile
+);
+
+speechRouter.get(
+    '/latest/:number',
+    speechHandler.getLatestSpeechFile
 );
 
 module.exports = speechRouter;
