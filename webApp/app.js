@@ -3,7 +3,6 @@ var logger = require('morgan');
 var app = express();
 var bodyParser = require('body-parser');
 const newsRouter = require('./routes/news');
-const textRouter = require('./routes/text');
 const constants = require('./tools/constants')
 
 app.use(logger('dev'));
@@ -18,11 +17,6 @@ app.use(
 app.use(
   constants.basePath + '/news',
   newsRouter
-);
-
-app.use(
-    constants.basePath + '/text',
-    textRouter
 );
 
 module.exports = app;
