@@ -11,7 +11,7 @@ async function start(server, port) {
 
     // Cloud Network Access Check!
     await dbClient.init();
-
+    console.log('port number : ' + port)
     app.set('port', port);
 
     server.listen(port);
