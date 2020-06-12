@@ -40,31 +40,67 @@ class SeoulCrawler:
             #새로운 Post 전송 후 rawContents를 비워둬야함.
             # print("length : ", len(self.rawContents))
     def crawlRawData(self, newPostNumber):
-        print(newPostNumber)
+        result = {}
         for i in range(1,newPostNumber+3):
             if i % 2 != 0:
-                print("#########")
-                print("환 자 번 호 : ",self.soup.select('#patient:nth-child({}) > td.sorting_1 > p'.format(i))[0].get_text())
-                print("#########")
+                component = {} 
+                component['환자번호'] = self.soup.select('#patient:nth-child({}) > td.sorting_1 > p'.format(i))[0].get_text()
+                component['감염경로'] = self.soup.select('#patient:nth-child({}) > td:nth-child(3)'.format(i))[0].get_text()
+                component['확진일'] = self.soup.select('#patient:nth-child({}) > td:nth-child(4)'.format(i))[0].get_text()
+                component['거주지'] = self.soup.select('#patient:nth-child({}) > td:nth-child(5)'.format(i))[0].get_text()
+                component['격리시설'] = self.soup.select('#patient:nth-child({}) > td:nth-child(6)'.format(i))[0].get_text()
             else:
                 contents = self.soup.select('#DataTables_Table_0 > tbody > tr:nth-child({}) > td.tdl > p'.format(i))
+                way = {}
                 if contents != None :
                     for content in contents : 
+                        contentInfo = {}
                         if content.b != None : 
-                            print("---- Date ----")
-                            print(content.b.text)
+                            contentInfo["날짜"] = content.b.text
                         if content.span != None : 
-                            print("---- Info ---")
-                            self.parseInfo(content.span.text)
+                            self.parseInfo(content.span.text,contentInfo)
+                            way['세부'] =contentInfo
+                        else : 
+                            way['세부'] = "확인중"
+                    component['경로'] = way
+                    result[i] = component
+            
+        print(result)
 
-    def parseInfo(self, string) :
+
+
+    def parseInfo(self, string,contentInfo) :
         strs = string.split('→')
-        if len(strs) == 1 : 
-            time = string.split(":")
-            for t in time:
-                print(t)
+        detail = {}
+        if len(strs) == 1 :  
+            if string.count(":")==1:
+                j = string.index(':')+3
+                detail["시간"] = string[0:j]
+                detail["내용"] = string[j:]
+            elif string.count(":")==2:
+                j = string.index(":");
+                k = string.index(":",j+1)+3
+                detail["시간"] = string[0:k]
+                detail["내용"] = string[k:]
+            else : 
+                detail["내용"] = string
+            contentInfo["세부사항"]=detail
         else : ## 여러 개 데이터 
             for s in strs:
+                if s.count(":")==1:
+                    j = s.index(':')+3
+                    detail["시간"] = s[0:j]
+                    detail["내용"] = s[j:]
+                elif s.count(":")==2:
+                    j = s.index(":");
+                    k = s.index(":",j+1)+3
+                    detail["시간"] = s[0:k]
+                    detail["내용"] = s[k:]
+                else : 
+                    detail["내용"] = s
+        contentInfo["세부사항"]=detail   
+
+
 
 
 crawler = SeoulCrawler()
