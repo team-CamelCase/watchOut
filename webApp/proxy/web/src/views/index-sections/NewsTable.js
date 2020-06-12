@@ -88,7 +88,11 @@ const NewsTable = inject("store")(
 									{row.type}
 								</TableCell>
 								<TableCell>
-									<Button>
+									<Button
+										onClick={() => props.store.openNewsDialog(
+											props.regionDataType,
+											row.id
+										)}>
 										{row.text}
 									</Button>
 								</TableCell>

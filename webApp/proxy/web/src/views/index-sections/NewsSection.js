@@ -12,6 +12,7 @@ import NewsTable from './NewsTable'
 
 import { observer, inject } from "mobx-react";
 import { makeStyles } from "@material-ui/styles";
+import NewsDialog from './NewsDialog'
 
 
 const NewsSection = inject("store")(
@@ -75,6 +76,12 @@ const NewsSection = inject("store")(
 
             </Row>
           </Container>
+
+          <React.Fragment>
+            {props.store.isNewsDialogOpen && 
+              <NewsDialog/>
+            }
+          </React.Fragment>
         </div>
     );
   }))
