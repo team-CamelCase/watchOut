@@ -22,7 +22,7 @@ RUN ./google-cloud-sdk/bin/gcloud config set project nlptutorial-1591598287452
 
 RUN pip install --trusted-host pypi.python.org -r requirement.txt
 
-CMD ["python", "tutorialGoogleNLP.py"]
+CMD ["python", "main.py"]
 
 
 

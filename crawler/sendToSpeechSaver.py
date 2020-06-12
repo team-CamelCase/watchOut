@@ -1,5 +1,4 @@
 import requests
-import argparse
 import os
 
 class Transfer():
@@ -11,4 +10,5 @@ class Transfer():
         response = requests.post(self.url, data = data)
         print(response.status_code)
         print(response.text)
+
 
