@@ -1,6 +1,6 @@
 from selenium import webdriver
 from bs4 import BeautifulSoup
-
+import json 
 ## webdriver headless opiton
 options = webdriver.ChromeOptions()
 options.add_argument('headless')
@@ -40,7 +40,6 @@ class SeoulCrawler:
             #새로운 Post 전송 후 rawContents를 비워둬야함.
             # print("length : ", len(self.rawContents))
     def crawlRawData(self, newPostNumber):
-        result = {}
         num = 0
         for i in range(1,newPostNumber+3):
             if i % 2 != 0:
@@ -53,7 +52,7 @@ class SeoulCrawler:
                 component['격리시설'] = self.soup.select('#patient:nth-child({}) > td:nth-child(6)'.format(i))[0].get_text()
             else:
                 contents = self.soup.select('#DataTables_Table_0 > tbody > tr:nth-child({}) > td.tdl > p'.format(i))
-                way = {}
+                way = []
                 if contents != None :
                     for content in contents : 
                         contentInfo = {}
@@ -61,20 +60,20 @@ class SeoulCrawler:
                             contentInfo["날짜"] = content.b.text
                         if content.span != None : 
                             self.parseInfo(content.span.text,contentInfo)
-                            way['세부'] = contentInfo
+                            component['경로'] = contentInfo
                         else : 
-                            way['세부'] = "확인중"
-                    component['경로'] = way
-                    result[num]=component
+                            component['경로']="확인중"
+                    self.rawContents.append(component)
                 else : 
-                    result[num]=component
-            print(result)
+                    self.rawContents.append(component)
+            print(self.rawContents)
 
 
 
     def parseInfo(self, string,contentInfo) :
         strs = string.split('→')
         detail = {}
+        lists = []
         if len(strs) == 1 :  
             if string.count(":")==1:
                 j = string.index(':')+3
@@ -86,8 +85,9 @@ class SeoulCrawler:
                 detail["시간"] = string[0:k]
                 detail["내용"] = string[k:]
             else : 
-                detail["내용"] = string
-            contentInfo["세부사항"]=detail
+                detail["내용"] = string    
+            lists.append(detail)
+            detail = {}
         else : ## 여러 개 데이터 
             for s in strs:
                 if s.count(":")==1:
@@ -101,8 +101,9 @@ class SeoulCrawler:
                     detail["내용"] = s[k:]
                 else : 
                     detail["내용"] = s
-        contentInfo["세부사항"]=detail   
-
+            lists.append(detail)
+            detail = {}  
+        contentInfo['세부경로'] = lists
 
 
 
