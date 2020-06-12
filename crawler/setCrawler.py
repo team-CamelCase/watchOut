@@ -60,15 +60,14 @@ class SeoulCrawler:
                             contentInfo["날짜"] = content.b.text
                         if content.span != None : 
                             self.parseInfo(content.span.text,contentInfo)
-                            way.append(contentInfo)
+                            errorFlag = contentInfo.get("Error")
+                            if errorFlag == None:
+                                way.append(contentInfo)
                         else : 
                             way=["확인중"]
                     component["경로"] = way 
                     self.rawContents.append(component)
-
-            print(self.rawContents)
-            print()
-
+        print(self.rawContents)
 
 
     def parseInfo(self, string,contentInfo) :
@@ -76,6 +75,7 @@ class SeoulCrawler:
         detail = {}
         lists = []
         if string.find("출처")==1:
+            contentInfo['Error']="true"
             return 
         if len(strs) == 1 :  
             if string.count(":")==1:
