@@ -97,7 +97,7 @@ class Store {
         try {
 
             const API_TOKEN = process.env.REACT_APP_IPINFO_TOKEN
-
+        
             const response = await fetch(
                 "http://ipinfo.io/json",
                 {
@@ -110,8 +110,6 @@ class Store {
             )
 
             const responseJson = await response.json()
-
-            console.log("ipinfo로 요청한 결과", responseJson)
 
             return responseJson
 
@@ -133,19 +131,17 @@ class Store {
 
     fetchNewsData = async (regionType) => {
         try {
-            // const response = await fetch(
-            //     "http://우리백엔드서버2",
-            //     {
-            //         headers: {
-            //             Accept: "application/json"
-            //         },
-            //         method: "GET"
-            //     }
-            // )
+            const response = await fetch(
+                "http://localhost/api/v1/news",
+                {
+                    headers: {
+                        Accept: "application/json"
+                    },
+                    method: "GET"
+                }
+            )
 
-            // const responseJson = await response.json()
-
-            // return responseJson.data
+            const newsData = await response.json()
 
             let newsDataField = ""
 
@@ -163,7 +159,7 @@ class Store {
 
                 const isDataNew = isNewDataAppeared(
                     this[newsDataField],
-                    rows
+                    newsData
                 )
 
                 if (isDataNew) {
@@ -186,7 +182,7 @@ class Store {
             } else {
                 this.set(
                     newsDataField,
-                    rows
+                    newsData
                 )
             }
 

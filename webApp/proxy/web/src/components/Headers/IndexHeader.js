@@ -39,22 +39,36 @@ function IndexHeader() {
               className="n-logo"
               src={require("assets/img/watchOut.png")}
               style={{
-                  maxWidth: 200
+                maxWidth: 200
               }}
             ></img>
             <h4>Protecting Yourself is THE BEST vaccine for COVID-19</h4>
           </div>
+          
           <h5 className="category category-absolute">
-            Coded by{" "} 
-              <img
-                alt="..."
-                className="invision-logo"
-                style={{
-                  maxWidth : 40
-                }}
-                src={require("assets/img/now-logo.png")}
-              ></img>
-            Team CamelCase. Supported by{" "}
+
+            Coded by{" "}
+
+            <img
+              alt="..."
+              className="invision-logo"
+              style={{
+                maxWidth: 40
+              }}
+              src={require("assets/img/now-logo.png")}
+            ></img>
+
+            <a
+              href="https://github.com/team-CamelCase"
+              target="_blank"
+              style={{
+                color : 'rgba(255, 255, 255, 0.5)'
+              }}>
+              Team CamelCase.
+            </a>
+
+              {" "}Supported by{" "}
+
             <a
               href="https://cloud.ibm.com/"
               target="_blank"
@@ -63,7 +77,7 @@ function IndexHeader() {
                 alt="..."
                 className="creative-tim-logo"
                 style={{
-                  maxWidth : 40
+                  maxWidth: 40
                 }}
                 src={require("assets/img/ibm_logo.png")}
               ></img>

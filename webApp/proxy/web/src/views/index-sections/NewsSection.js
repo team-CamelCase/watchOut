@@ -22,15 +22,11 @@ const NewsSection = inject("store")(
     const sections = [
       {
         title: "현재 지역",
-        regionType : "city",
-        // regionFieldName: "userCity",
-        // regionDataType : "cityNewsData"
+        regionType : props.store.CITY,
       },
       {
         title: "현재 국가",
-        regionType : "country",
-        // regionFieldName: "userCountry",
-        // regionDataType : "countryNewsData"
+        regionType : props.store.COUNTRY,
       }
     ]
 
@@ -39,10 +35,11 @@ const NewsSection = inject("store")(
           <Container>
             <Row>
 
-              {sections.map(eachSection => {
+              {sections.map((eachSection, idx) => {
                 return (
                   <Col
                     className="ml-auto mr-auto"
+                    key={idx}
                     md="10"
                     xl="6">
 

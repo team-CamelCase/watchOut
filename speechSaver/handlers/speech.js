@@ -58,13 +58,19 @@ const makeFileName = (id, newsData) => {
 }
 
 const isRequestValid = (req) => {
-	if (req.body.title == undefined
-		|| req.body.title == null) {
+	if (req.body.title == undefined) {
 		return false
 	}
 
-	if (req.body.content == undefined
-		|| req.body.content == null) {
+	if (req.body.title == null || req.body.title == ""){
+		return false
+	}
+
+	if (req.body.content == undefined){
+		return false
+	}
+	
+	if (req.body.content == null || req.body.content == "") {
 		return false
 	}
 
