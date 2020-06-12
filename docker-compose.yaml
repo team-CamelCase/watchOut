@@ -4,7 +4,7 @@ services:
     build:
       context: .
       dockerfile: ./docker/dockerfiles/crawler/Dockerfile
-    container_name: speech_proxy
+    container_name: crawler
     networks:
       mynet:
         ipv4_address: 172.28.0.7
