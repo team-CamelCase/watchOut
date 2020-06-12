@@ -60,13 +60,14 @@ class SeoulCrawler:
                             contentInfo["날짜"] = content.b.text
                         if content.span != None : 
                             self.parseInfo(content.span.text,contentInfo)
-                            component['경로'] = contentInfo
+                            way.append(contentInfo)
                         else : 
-                            component['경로']="확인중"
+                            way=["확인중"]
+                    component["경로"] = way 
                     self.rawContents.append(component)
-                else : 
-                    self.rawContents.append(component)
+
             print(self.rawContents)
+            print()
 
 
 
@@ -74,6 +75,8 @@ class SeoulCrawler:
         strs = string.split('→')
         detail = {}
         lists = []
+        if string.find("출처")==1:
+            return 
         if len(strs) == 1 :  
             if string.count(":")==1:
                 j = string.index(':')+3
@@ -90,6 +93,8 @@ class SeoulCrawler:
             detail = {}
         else : ## 여러 개 데이터 
             for s in strs:
+                if s.find("출처")==1:
+                    break
                 if s.count(":")==1:
                     j = s.index(':')+3
                     detail["시간"] = s[0:j]
@@ -108,3 +113,4 @@ class SeoulCrawler:
 
 
 crawler = SeoulCrawler()
+
