@@ -1,5 +1,7 @@
 from selenium import webdriver
 from bs4 import BeautifulSoup
+
+## webdriver headless opiton
 options = webdriver.ChromeOptions()
 options.add_argument('headless')
 options.add_argument('window-size=1920x1080')
@@ -13,36 +15,32 @@ class SeoulCrawler:
     ## Click confirmation path tab
     driver.find_element_by_css_selector('#container > div.layout-inner.layout-sub \
     > div > div.move-tab > ul > li:nth-child(2) > button').click()
+
     # 클릭한 페이지에서 html 가져오기
     html = driver.page_source
     soup = BeautifulSoup(html, 'html.parser')
+
+    topPatientCSS = '#patient:nth-child(1) > td.sorting_1 > p'
     topPatientNumber = False
+    newPostNumber = False
+    rawContents = []
     def __init__(self):
         #클래스 초기화시 최상단 patientNumber를 가져온다.
-        patientNumber = self.soup.select('#patient:nth-child(1) > td.sorting_1 > p')[0].get_text()
+        patientNumber = self.soup.select(self.topPatientCSS)[0].get_text()
         self.topPatientNumber = int(patientNumber)
+
     def countNewPost(self, prevPatientNumber):
-        ## 10분마다 새로운 게시글이 있는 확인
         ## prevPatientNumber와 비교하여 새로운 정보 확인
         ## 게시글 수 리턴
-        return
-    def crawlRawData(self):
-        rawContents = []
-        ## 확진자 이동 경로 및 시간이 있는 html 항목 tr:nth-child(2n) (n>=1)
-        for i in range(1,10):
-            rawContents.append(self.soup.select('#DataTables_Table_0 > tbody > tr:nth-child({})'.format(i)))
+        newPatientNumber = int(self.soup.select(self.topPatientCSS)[0].get_text())
+        self.newPostNumber = newPatientNumber - prevPatientNumber
+        if self.newPostNumber != 0:
+            self.crawlRawData(self.newPostNumber)
+            # print(self.rawContents)
+            #새로운 Post 전송 후 rawContents를 비워둬야함.
+            # print("length : ", len(self.rawContents))
+    def crawlRawData(self, newPostNumber):
+        for i in range(1,newPostNumber):
+            self.rawContents.append(self.soup.select('#DataTables_Table_0 > tbody > tr:nth-child({})'.format(i)))
 
-        return rawContents
 crawler = SeoulCrawler()
-topPatientNumber = str(crawler.topPatientNumber)
-print(type(topPatientNumber))
-print(topPatientNumber)
-print(crawler.crawlRawData())
-
-
-
-
-
-
-
-
