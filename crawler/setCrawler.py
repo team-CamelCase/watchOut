@@ -4,7 +4,7 @@ import json
 ## webdriver headless opiton
 options = webdriver.ChromeOptions()
 options.add_argument('headless')
-options.add_argument('window-size=1920x1080')
+options.add_argument('window-size=300x300')
 options.add_argument("disable-gpu")
 
 class SeoulCrawler:
@@ -36,9 +36,7 @@ class SeoulCrawler:
         self.newPostNumber = newPatientNumber - prevPatientNumber
         if self.newPostNumber != 0:
             self.crawlRawData(self.newPostNumber)
-            # print(self.rawContents)
-            #새로운 Post 전송 후 rawContents를 비워둬야함.
-            # print("length : ", len(self.rawContents))
+
     def crawlRawData(self, newPostNumber):
         num = 0
         for i in range(1,(newPostNumber+1)*2):
