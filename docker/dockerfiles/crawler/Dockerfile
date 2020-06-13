@@ -2,7 +2,7 @@ FROM python:3.7.7
 
 WORKDIR /crawlerContainner
 
-ADD . /crawlerContainner
+ADD ./crawler /crawlerContainner
 
 RUN curl -O https://dl.google.com/dl/cloudsdk/channels/rapid/downloads/google-cloud-sdk-293.0.0-linux-x86_64.tar.gz
 
@@ -22,7 +22,7 @@ RUN ./google-cloud-sdk/bin/gcloud config set project nlptutorial-1591598287452
 
 RUN pip install --trusted-host pypi.python.org -r requirement.txt
 
-CMD ["python", "tutorialGoogleNLP.py"]
+CMD ["python", "main.py"]
 
 
 
