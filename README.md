@@ -14,7 +14,7 @@ make run
 2. watchOut web page : port 80
 
 # Architecture
-<img width="1112" alt="스크린샷 2020-06-10 오전 11 51 54" src="https://user-images.githubusercontent.com/48001093/84221739-e4857780-ab10-11ea-81e9-e7b88c24f8bb.png">
+<img width="823" alt="스크린샷 2020-06-13 오후 1 04 13" src="https://user-images.githubusercontent.com/48001093/84559552-8ce84580-ad76-11ea-8198-07e238e6ca1b.png">
 
 # Contributors
 [Kim Yaechan](https://github.com/LukeKim32)
