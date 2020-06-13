@@ -3,7 +3,6 @@ Data crawling and crate raido news script
 
 ### 필수 사항
 
-1. Google Cloud NLP API를 사용하기위한 key file은 따로 받아 진행해야합니다.
 
 2. 사전에 virtualenv crawlerCovid를 실행하여 crawlerCovid 가상환경이 생성되어 있습니다.
 3. source crawlerCovid/bin/activate를 실행 후 crawlerCovid 가상환경이 실행되어 있는지 확인하세요.
@@ -37,17 +36,14 @@ docker 에는 필요한 패키지랑 라이브러리들 환경 세팅 해놨습�
     pip install schedule
 # Function
 
-### 1. Set Crawler
-
-### 2. Clean Raw Data Function
-
-    a. Extract time data
-    b. Extract location data with Google Cloud Natural Language API
-    c. Create dictionary
+### 1. setCrawler
+    a. Clean Raw Data Function
+    b. Extract time data
+    c. Extract location data
+    d. Create dictionary
         key(time), value(location list)
+    e. Detect new posts
 
-### 3. Automatic detection of new posts Function
+### 3. createNewsScript
 
-### 4. Create news scripts
-
-### 5. Send to Speech Saver
+### 4. sendToSpeechSaver

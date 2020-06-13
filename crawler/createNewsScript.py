@@ -1,8 +1,3 @@
-
-# 1. Seoul 시청같이 데이터 정제가 잘 된 경우
-## script template
-# 1. {6.11} {영등포} 확진자 정보입니다. 현재 경로 확인 중에 있으며, {서남병원}에 격리 조치되었습니다.
-
 class Script:
     title = ""
     template = ""

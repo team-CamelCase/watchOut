@@ -1,4 +1,5 @@
 #-*- coding:utf-8 -*-
+
 ####
  #       _____                              _    _____
  #      / ____|                            | |  / ____|
@@ -24,15 +25,16 @@ import schedule
 import time
 
 ## 새로운 포스트 감지를 위한 스케쥴
-schedule.every(3).seconds.do(setCrawler.crawler.countNewPost, 1060)
+## 새로 업데이트되는 포스트가 없어 마지막 포스트를 1060번째로 가정하고 진행.
+schedule.every(5).seconds.do(setCrawler.crawler.countNewPost, 1060)
 
 while True:
     schedule.run_pending()
-    time.sleep(3)
+    time.sleep(5)
     rawContents = setCrawler.crawler.rawContents
     if len(rawContents) != 0: ## update된 정보가 있는 경우 createNewsScript 생성
         script = Script()
-    
+
         script.generate(rawContents)
         for i in range(len(rawContents)):
             print("Title : ", script.titleList[i])
