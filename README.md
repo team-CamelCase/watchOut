@@ -16,6 +16,9 @@ make run
 # Architecture
 <img width="823" alt="스크린샷 2020-06-13 오후 1 04 13" src="https://user-images.githubusercontent.com/48001093/84559552-8ce84580-ad76-11ea-8198-07e238e6ca1b.png">
 
+# Demo video
+Youtube : https://youtu.be/xkv1cKFxUk4
+
 # Contributors
 [Kim Yaechan](https://github.com/LukeKim32)
 
