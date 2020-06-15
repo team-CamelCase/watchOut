@@ -1,7 +1,7 @@
 # watchOut
 This is a project supporting infra and features to local districts world wide, to fight against spread of COVID-19 supported by *2020 IBM hackathon*
 
-# Devo Video
+# Demo Video
 
 [![Watch the video](https://img.youtube.com/vi/xkv1cKFxUk4/maxresdefault.jpg)](https://youtu.be/xkv1cKFxUk4)
 
