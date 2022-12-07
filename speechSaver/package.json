@@ -21,10 +21,10 @@
   },
   "homepage": "https://github.com/LukeKim32/ibm_fight_covid_local#readme",
   "dependencies": {
-    "body-parser": "^1.19.0",
+    "body-parser": "^1.20.1",
     "debug": "^4.1.1",
     "dotenv": "^8.2.0",
-    "express": "^4.17.1",
+    "express": "^4.18.2",
     "ibm-cos-sdk": "^1.6.1",
     "ibm-watson": "^5.6.0",
     "mongodb": "^3.5.8",
